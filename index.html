@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedro & Emanuela</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Login Screen overlay -->
+    <div id="login-screen" class="login-screen">
+        <div class="login-card">
+            <div class="heart-decor">❤️</div>
+            <div class="login-hero">
+                <span class="big-heart">❤️</span>
+                <span class="small-heart">💗</span>
+            </div>
+            <h2>Bem-vindo(a)</h2>
+            <p class="login-sub">Digite seu usuário e senha para entrar.</p>
+            <p class="login-hint">Dica: o usuário é um apelido carinhoso e a senha é uma data especial.</p>
+            <form id="login-form">
+                <input id="login-name" type="text" placeholder="Usuário" required />
+                <input id="login-pass" type="password" placeholder="Senha" required />
+                <div class="login-actions">
+                    <button type="submit" class="btn-enter">Entrar</button>
+                </div>
+                <div id="login-msg" class="login-msg"></div>
+            </form>
+        </div>
+    </div>
+
+    <div class="app-container">
+        <header class="app-header">
+            <button class="menu-toggle" onclick="toggleMenu()" title="Abrir Menu">☰</button>
+            <h1>Pedro & Emanuela</h1>
+            <p class="subtitle">Nosso Amor em Cada Segundo</p>
+            <div class="heart-icon">❤️</div>
+        </header>
+
+        <nav class="mobile-menu" id="mobile-menu">
+            <button class="menu-close" onclick="toggleMenu()">✕</button>
+            <ul>
+                <li><a href="#" onclick="scrollToSection(event)">Contador</a></li>
+                <li><a href="#" onclick="mostrarGaleriaFullscreen(event)">Galeria</a></li>
+                <li><a href="#" onclick="mostrarMensagemFullscreen(event)">Mensagem</a></li>
+                <li><a href="#" onclick="mostrarDesejosFullscreen(event)">Desejos da Nossa Vida</a></li>
+                <li><a href="#" onclick="mostrarPlaylistFullscreen(event)">🎵 Playlist</a></li>
+            </ul>
+        </nav>
+
+        <section class="counter-section" id="contador">
+            <h2>Estamos juntos há:</h2>
+            <div class="timer">
+                <div class="time-box">
+                    <span id="days">00</span>
+                    <label>Dias</label>
+                </div>
+                <div class="time-box">
+                    <span id="hours">00</span>
+                    <label>Horas</label>
+                </div>
+                <div class="time-box">
+                    <span id="minutes">00</span>
+                    <label>Minutos</label>
+                </div>
+                <div class="time-box">
+                    <span id="seconds">00</span>
+                    <label>Segundos</label>
+                </div>
+            </div>
+            <p class="start-date">Desde: 06/04/2025</p>
+        </section>
+
+        <section class="gallery-section" id="galeria">
+            <h2>Nossos Momentos</h2>
+            <p class="gallery-intro">Clique em "Galeria" no menu para adicionar e gerenciar suas fotos.</p>
+            
+            <!-- Slideshow de Fotos -->
+            <div class="slideshow-container">
+                <div class="slideshow-wrapper">
+                    <div class="slideshow" id="slideshow"></div>
+                    <button class="slide-control prev" onclick="mudaSlide(-1)">❮</button>
+                    <button class="slide-control next" onclick="mudaSlide(1)">❯</button>
+                </div>
+                
+                <div class="slideshow-controls">
+                    <button class="play-pause-btn" id="play-pause-btn" onclick="togglePlayPause()" title="Reproduzir/Pausar">▶</button>
+                    <div class="slide-indicators" id="slide-indicators"></div>
+                    <span class="slide-counter" id="slide-counter">0 / 0</span>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Modal de Visualização de Fotos -->
+    <div id="photo-modal" class="photo-modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="fecharModalFoto()"></button>
+            <button class="modal-nav prev" onclick="fotoAnterior()">&#10094;</button>
+            <img id="modal-photo" src="" alt="Foto em detalhe">
+            <button class="modal-nav next" onclick="proximaFoto()">&#10095;</button>
+            <div class="photo-info">
+                <span id="photo-counter">1 / 1</span>
+                <span id="photo-date"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tela de Galeria em Tela Cheia -->
+    <div class="fullscreen-section" id="galeria-fullscreen">
+        <header class="fullscreen-header">
+            <button class="back-button" onclick="voltarParaApp()">← Voltar</button>
+            <h1>Nossos Momentos</h1>
+            <div class="header-spacer"></div>
+        </header>
+        <div class="fullscreen-content gallery-fullscreen">
+            <div class="gallery-grid-full" id="gallery-grid-full">
+                <!-- 20 cards serão adicionados aqui dinamicamente -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Tela de Mensagem em Tela Cheia -->
+    <div class="fullscreen-section" id="mensagem-fullscreen">
+        <header class="fullscreen-header">
+            <button class="back-button" onclick="voltarParaApp()">← Voltar</button>
+            <h1>Para Você</h1>
+            <div class="header-spacer"></div>
+        </header>
+        <div class="fullscreen-content message-fullscreen">
+            <div class="typing-message-container">
+                <p class="typing-text" id="typing-text"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tela de Desejos da Nossa Vida -->
+    <div class="fullscreen-section" id="desejos-fullscreen">
+        <header class="fullscreen-header">
+            <button class="back-button" onclick="voltarParaApp()">← Voltar</button>
+            <h1>Desejos da Nossa Vida</h1>
+            <div class="header-spacer"></div>
+        </header>
+        <div class="fullscreen-content desejos-fullscreen">
+            <div class="desejos-scrollbar">
+                <span class="desejos-scrollbar-thumb"></span>
+            </div>
+            <div class="desejos-board">
+                <div class="desejos-intro">
+                    <span class="desejos-top-label">Nossos Sonhos</span>
+                    <h2>Desejos da Nossa Vida</h2>
+                    <p class="desejos-text">Cada sonho guardado como um pequeno polaroid, com carinho, luz suave e a certeza de que vamos construir isso juntos.</p>
+                </div>
+                <div class="desejos-grid" id="desejos-grid"></div>
+                <p class="desejos-note">Um mural de desejos delicado, romântico e sonhador — como nosso futuro.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tela de Playlist em Tela Cheia -->
+    <div class="fullscreen-section" id="playlist-fullscreen">
+        <header class="fullscreen-header">
+            <button class="back-button" onclick="voltarParaApp()">← Voltar</button>
+            <h1>🎵 Playlist</h1>
+            <div class="header-spacer"></div>
+        </header>
+        <div class="fullscreen-content playlist-fullscreen">
+            <div class="player-main">
+                <div class="album-art-container">
+                    <div class="album-art" id="album-art">♪</div>
+                </div>
+                <div class="now-playing-info">
+                    <p class="song-title" id="song-title">Carregando...</p>
+                    <p class="artist-name" id="artist-name">Músicas Românticas</p>
+                </div>
+                <div class="progress-section">
+                    <div class="progress-bar-wrapper">
+                        <div class="progress" id="progress"></div>
+                        <input type="range" id="progress-input" min="0" max="100" value="0" class="progress-input">
+                    </div>
+                    <div class="time-display">
+                        <span class="time" id="current-time">0:00</span>
+                        <span class="time" id="duration-time">0:00</span>
+                    </div>
+                </div>
+                <div class="player-controls">
+                    <button class="control-btn skip-btn" onclick="playlistAnterior()" title="Anterior">⏮</button>
+                    <button class="control-btn play-btn-big" id="play-btn" onclick="togglePlayPausePlaylist()" title="Play/Pause">▶</button>
+                    <button class="control-btn skip-btn" onclick="proximaPlaylist()" title="Próxima">⏭</button>
+                </div>
+                <audio id="audio-player"></audio>
+            </div>
+            <div class="playlist-container">
+                <h3>Fila de Reprodução</h3>
+                <div class="playlist-list" id="playlist-list">
+                    <!-- Músicas serão adicionadas aqui -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
